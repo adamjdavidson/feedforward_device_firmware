@@ -37,14 +37,25 @@ def main():
     names = ['installer/Install Magic 8.command', 'THIRD_PARTY.md']
     for arch in ('arm64', 'amd64'):
         names += [f'installer/vendor/esptool-macos-{arch}/{name}' for name in ('esptool', 'LICENSE')]
+    names += [f'docs/images/{name}.jpg' for name in ('device-buttons','loose-battery','open-case','battery-connected','insulating-sheet','battery-insulated')]
     for name in names:
         path = ROOT/name
         if not path.is_file():
             parser.error(f'Required package file is missing: {name}')
         files[name] = path.read_bytes()
-    body = markdown.markdown((ROOT/'docs/INSTALLATION.md').read_text(), extensions=['tables','fenced_code'])
-    css = 'body{font:18px/1.6 -apple-system,BlinkMacSystemFont,sans-serif;max-width:760px;margin:48px auto;padding:0 24px;color:#172b42}h1,h2,h3{line-height:1.2}h2{margin-top:2em}a{color:#075ba6}li{margin:.6em 0}code{font-size:.9em;background:#f2f4f6;padding:2px 5px}table{border-collapse:collapse}td,th{border:1px solid #ccc;padding:8px}blockquote{border-left:4px solid #ccc;margin-left:0;padding-left:18px}pre{white-space:pre-wrap}@media print{body{margin:0;font-size:12pt}}'
-    files['START HERE.html'] = (f'<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Install Magic 8 firmware</title><style>{css}</style><main>{body}</main></html>').encode()
+    css = (ROOT/'docs/guide.css').read_text()
+    guides = [
+        ('START HERE.html', 'README.md', 'Install Magic 8 firmware'),
+        ('FIT BATTERY.html', 'docs/BATTERY.md', 'Fit the Magic 8 battery'),
+    ]
+    for output, source, title in guides:
+        copy = (ROOT/source).read_text().split('<!-- maintainer-links -->')[0]
+        copy = copy.replace('(docs/BATTERY.md)', '(FIT%20BATTERY.html)')
+        copy = copy.replace('(../README.md)', '(START%20HERE.html)')
+        if source.startswith('docs/'):
+            copy = copy.replace('(images/', '(docs/images/')
+        body = markdown.markdown(copy, extensions=['tables','fenced_code','toc'])
+        files[output] = (f'<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>{title}</title><style>{css}</style><main>{body}</main></html>').encode()
     files['dist/'+args.firmware.name] = image
     installer_commit = subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip()
     metadata = {'version': version, 'status': 'walkthrough-candidate', 'firmware_source_repository': 'adamjdavidson/magic8-device-firmware', 'firmware_source_commit': args.source_commit, 'firmware_file':args.firmware.name, 'firmware_sha256':hashlib.sha256(image).hexdigest(), 'installer_source_commit':installer_commit, 'esptool_version':'5.4.0'}
