@@ -9,7 +9,7 @@
 
 ## Watch the installation
 
-**[Open the battery installation video (4 min 8 sec)](videos/battery-installation.mp4)**
+**[Download the battery installation video (4 min 8 sec)](videos/battery-installation.mp4?raw=true)**
 
 ## Gather the parts
 

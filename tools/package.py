@@ -55,6 +55,7 @@ def main():
         if source.startswith('docs/'):
             copy = copy.replace('(images/', '(docs/images/')
             copy = copy.replace('(videos/', '(docs/videos/')
+            copy = copy.replace('battery-installation.mp4?raw=true)', 'battery-installation.mp4)')
         body = markdown.markdown(copy, extensions=['tables','fenced_code','toc'])
         if source == 'docs/BATTERY.md':
             body = body.replace('<p><strong><a href="docs/videos/battery-installation.mp4">', '<video controls playsinline preload="metadata" src="docs/videos/battery-installation.mp4" aria-label="Battery installation video"></video>\n<p><strong><a href="docs/videos/battery-installation.mp4">')
