@@ -1,0 +1,36 @@
+name: Installer checks
+on:
+  pull_request:
+  push:
+    branches: [main]
+permissions:
+  contents: read
+jobs:
+  installer-tests:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      - name: Install package-build dependency
+        run: |
+          python3 -m venv .venv
+          .venv/bin/pip install -r requirements-build.txt
+      - name: Test installer and package
+        run: |
+          bash -n 'installer/Install Magic 8.command'
+          .venv/bin/python -m unittest discover -s tests -v
+
+  bundled-tool:
+    strategy:
+      matrix:
+        include:
+          - os: macos-26
+            architecture: arm64
+          - os: macos-26-intel
+            architecture: amd64
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262
+      - name: Run the real bundled tool without USB access
+        run: |
+          uname -m
+          installer/vendor/esptool-macos-${{ matrix.architecture }}/esptool version
