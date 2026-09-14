@@ -1,15 +1,5 @@
 # Install Magic 8 on a Mac
 
-**Download the software. Connect the device. Double-click to install.**
-
-## [Download for Mac](https://github.com/adamjdavidson/feedforward_device_firmware/releases/download/v0.2.1-guide2/Magic8-Firmware-0.2.1-mac.zip)
-
-> **First time on this Mac? Apple may block the installer.**
->
-> You will allow it in **System Settings → Privacy & Security → Open Anyway**.
->
-> **[See the exact steps below ↓](#mac-approval)** — you do not need to delete the file or type a command.
-
 ## Before you begin
 
 Have these three things ready:
@@ -22,16 +12,14 @@ Have these three things ready:
 
 ---
 
-## 1. Download and unzip
+# 1. [Download for Mac](https://github.com/adamjdavidson/feedforward_device_firmware/releases/download/v0.2.1-guide3/Magic8-Firmware-0.2.1-mac.zip)
 
 1. Click **Download for Mac** above.
 2. Open **Downloads** in Finder.
 3. Double-click **Magic8-Firmware-0.2.1-mac.zip** to unzip it.
 4. Open the new **Magic 8 Firmware** folder.
 
-**Keep that folder together.** Do not move individual files out of it.
-
-> **Choose the named Mac ZIP.** GitHub's **Code → Download ZIP** and **Source code** downloads do not contain the ready-to-install software.
+![](docs/images/mac-download-folder.png)
 
 ## 2. Connect the device
 
@@ -44,7 +32,12 @@ Have these three things ready:
 Inside the downloaded **Magic 8 Firmware** folder:
 
 1. Open the **installer** folder.
+
+    ![](docs/images/mac-installer-folder.jpg)
+
 2. Double-click **Install Magic 8.command**.
+
+    ![](docs/images/mac-installer-command.png)
 
 A window called **Terminal** will open when the installer is allowed to run. It handles the installation automatically. **You do not type anything.**
 
@@ -56,44 +49,49 @@ You may see this warning:
 
 > **Apple could not verify “Install Magic 8.command” is free of malware that may harm your Mac or compromise your privacy.**
 
-**Do not click “Move to Trash.”** The approval button is in **System Settings**, not in that warning.
+![](docs/images/mac-security-warning.png)<!-- {"width":231} -->
 
-1. **Leave the warning open.** Switch to **System Settings** from the Apple menu at the top left of your screen.
-2. Click **Privacy & Security**.
-3. Scroll down to **Security**.
-4. Find the message about **Install Magic 8.command** and click **Open Anyway**.
-5. Enter your Mac password or use Touch ID if asked.
-6. Click **Open** in the confirmation. If installation has not started, double-click **Install Magic 8.command** again.
+**Do not click “Move to Trash.”**  
+This software is safe, it just hasn’t been officially approved by Apple.
 
-**If the installer is already running, skip straight to Step 5.**
+1. **Click Done.**
+2. Switch to **System Settings** from the Apple menu at the top left of your screen.
+3. Click **Privacy & Security**.
+4. Scroll down to **Security**.
+5. Find the message about **Install Magic 8.command** and click **Open Anyway**.
 
-This is the first-launch approval for this downloaded copy. The installer has not been notarized by Apple. [Apple documents this approval procedure.](https://support.apple.com/en-us/102445)
+    ![](docs/images/mac-open-anyway.png)<!-- {"width":355} -->
+
+6. Enter your Mac password or use Touch ID if asked.
+7. Click **Open** in the confirmation. If installation has not started, double-click **Install Magic 8.command** again.
+
 
 ## 5. Wait for “PASS”
 
-- Watch the percentages count up.
+- A terminal window will open and automatically begin the install
+- Watch the percentages count up. It shouldn’t take more than a few seconds.
 - **Keep the cable connected.**
 - Wait for this exact message:
 
 > **PASS -- firmware installed and verified.**
 
-**That means the software has been installed.** It was fast in our Mac walkthrough; earlier prototype installations took under a minute.
+![](docs/images/mac-install-pass.png)
 
-**Seeing FAILED instead?** Use the **[troubleshooting table](#troubleshooting)** below.
+(**Seeing FAILED instead?** Use the **[troubleshooting table](#troubleshooting)** below.)
 
 ## 6. Check that it works
 
 Keep the device plugged in for this check.
 
-| Do this | You should see |
-|---|---|
-| Press the button labeled **KEY** or **+/KEY** on the case | **SHAKE ME** on a cream screen |
-| Shake the device | A swirl, then an AI move |
-| Tap anywhere on the screen | An extra sentence about the move |
-| Tap anywhere again | A QR code |
-| Scan the QR code with your phone | The page for that move |
+| Do this                                                      | You should see                   |
+|--------------------------------------------------------------|----------------------------------|
+| Press the button furthest to the right when looking at the screen.  | **SHAKE ME** on a cream screen   |
+| Shake the device                                             | A swirl, then an AI move         |
+| Tap anywhere on the screen                                   | An extra sentence about the move |
+| Tap anywhere again                                           | A QR code                        |
+| Scan the QR code with your phone                             | The page for that move           |
 
-**Which button?** Use the end button labeled **+/KEY**. It is the third button when counting from the **BOOT** end. **PWR** is the middle button.
+**Which button?** Use the right-most button labeled **+/KEY**. It is the third button when counting from the **BOOT** end. **PWR** is the middle button.
 
 ![The back of the device, showing three buttons labeled +/KEY, PWR and BOOT. Use the +/KEY end button to wake it.](docs/images/device-buttons.jpg)
 
@@ -127,4 +125,4 @@ Keep the device plugged in for this check.
 
 ---
 
-**Other information:** [Battery fitting and charging](docs/BATTERY.md) · [Release notes](https://github.com/adamjdavidson/feedforward_device_firmware/releases/tag/v0.2.1-guide2) · [For maintainers](docs/RELEASE.md) · [Bundled software](THIRD_PARTY.md)
+**Other information:** [Battery fitting and charging](docs/BATTERY.md) · [Release notes](https://github.com/adamjdavidson/feedforward_device_firmware/releases/tag/v0.2.1-guide3) · [For maintainers](docs/RELEASE.md) · [Bundled software](THIRD_PARTY.md)
