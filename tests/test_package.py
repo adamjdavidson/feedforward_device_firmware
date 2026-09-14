@@ -49,6 +49,30 @@ class PackageTests(unittest.TestCase):
                 self.assertEqual(digest,hashlib.sha256(z.read(root+name)).hexdigest())
             self.assertFalse(any('/.git/' in n or '/tests/' in n for n in names))
 
+    def test_photo_guides_and_navigation_work_without_a_network(self):
+        from html.parser import HTMLParser
+        from urllib.parse import unquote, urlsplit
+        class Links(HTMLParser):
+            def __init__(self):
+                super().__init__(); self.images=[]; self.links=[]
+            def handle_starttag(self, tag, attrs):
+                attrs=dict(attrs)
+                if tag=='img': self.images.append(attrs.get('src',''))
+                if tag=='a': self.links.append(attrs.get('href',''))
+        r=self.run_builder()
+        self.assertEqual(r.returncode,0,r.stdout+r.stderr)
+        with zipfile.ZipFile(next(self.output.glob('*.zip'))) as z:
+            root='Magic 8 Firmware/'
+            self.assertIn(root+'FIT BATTERY.html',z.namelist())
+            for name in ['START HERE.html','FIT BATTERY.html']:
+                page=Links(); page.feed(z.read(root+name).decode())
+                self.assertTrue(page.images, name+' needs its instructional photographs')
+                for link in page.images+page.links:
+                    parts=urlsplit(link)
+                    if not parts.scheme and parts.path:
+                        self.assertIn(root+unquote(parts.path),z.namelist(), link)
+            self.assertIn(b'Open Anyway',z.read(root+'START HERE.html'))
+
     def test_development_image_cannot_be_packaged(self):
         target=self.image.with_name('magic8-0.2.1-DEV-esp32c6-merged.bin')
         self.image.rename(target); self.image=target

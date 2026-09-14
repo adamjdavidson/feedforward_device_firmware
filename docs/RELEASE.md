@@ -28,7 +28,7 @@ python tools/package.py --firmware /absolute/path/to/magic8-VERSION-esp32c6-merg
 
 Substitute the real image path and its source SHA. Run this from a clean, committed installer checkout so `release.json` records the code that actually produced the ZIP. The command writes `packages/Magic8-Firmware-VERSION-mac.zip` and its `.zip.sha256` file.
 
-`docs/INSTALLATION.md` is the single source for `START HERE.html`. The builder uses an explicit allowlist, bundles only the two esptool executables and licenses, includes exactly one firmware image, and records both firmware and installer source commits. The ZIP retains executable permissions. `SHA256SUMS` covers every included file except itself. The installer checks those sums before writing to USB. Checksums detect corruption; they are not a signature authenticating the publisher.
+`README.md` is the single source for `START HERE.html`; `docs/BATTERY.md` produces `FIT BATTERY.html`. The package includes the six named photos under `docs/images/`, and rewrites links so both guides and their photos work offline. `docs/guide.css` controls their typography. The builder uses an explicit allowlist, bundles only the two esptool executables and licenses, includes exactly one firmware image, and records both firmware and installer source commits. The ZIP retains executable permissions. `SHA256SUMS` covers every included file except itself. The installer checks those sums before writing to USB. Checksums detect corruption; they are not a signature authenticating the publisher.
 
 CI also runs each real bundled esptool executable on its matching Apple Silicon or Intel Mac runner, using the version command without accessing USB.
 
@@ -42,7 +42,7 @@ The package builder rejects development filenames, empty images and uncommitted 
 4. Install that exact package on the intended board and capture its first boot version. Walk wake, shake, more text and QR scan with a person watching the screen.
 5. Record each result and remaining unknown in release notes. A package still awaiting these observations must remain a GitHub **pre-release**, labeled as a walkthrough candidate. Publish no claim that the production batch is ready until its physical checks and assembly/charging instructions are complete.
 
-Use a release asset named `Magic8-Firmware-VERSION-mac.zip`, plus its `.zip.sha256`. Update the README download link when a new package replaces it. GitHub-generated source archives are not installation packages.
+Use a release asset named `Magic8-Firmware-VERSION-mac.zip`, plus its `.zip.sha256`. Update the README download and release-notes links when a new package replaces it. For instructions-only revisions, keep the firmware image and version unchanged and publish under a new descriptive tag (for example `v0.2.1-guide2`); never silently replace an earlier published ZIP. GitHub-generated source archives are not installation packages.
 
 ## Update the bundled tool
 
