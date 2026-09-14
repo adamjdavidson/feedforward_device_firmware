@@ -38,6 +38,7 @@ def main():
     for arch in ('arm64', 'amd64'):
         names += [f'installer/vendor/esptool-macos-{arch}/{name}' for name in ('esptool', 'LICENSE')]
     names += [f'docs/images/{name}.jpg' for name in ('device-buttons','loose-battery','open-case','battery-connected','insulating-sheet','battery-insulated')]
+    names += [f'docs/images/{name}' for name in ('mac-download-folder.png', 'mac-installer-folder.jpg', 'mac-installer-command.png', 'mac-security-warning.png', 'mac-open-anyway.png', 'mac-install-pass.png')]
     for name in names:
         path = ROOT/name
         if not path.is_file():
