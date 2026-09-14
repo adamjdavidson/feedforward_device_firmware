@@ -28,7 +28,9 @@ python tools/package.py --firmware /absolute/path/to/magic8-VERSION-esp32c6-merg
 
 Substitute the real image path and its source SHA. Run this from a clean, committed installer checkout so `release.json` records the code that actually produced the ZIP. The command writes `packages/Magic8-Firmware-VERSION-mac.zip` and its `.zip.sha256` file.
 
-`docs/INSTALLATION.md` is the single source for `START HERE.html`. The builder uses an explicit allowlist, bundles only the two esptool executables and licenses, includes exactly one firmware image, and records both firmware and installer source commits. The ZIP retains executable permissions. `SHA256SUMS` covers every included file except itself. The installer checks those sums before writing to USB.
+`docs/INSTALLATION.md` is the single source for `START HERE.html`. The builder uses an explicit allowlist, bundles only the two esptool executables and licenses, includes exactly one firmware image, and records both firmware and installer source commits. The ZIP retains executable permissions. `SHA256SUMS` covers every included file except itself. The installer checks those sums before writing to USB. Checksums detect corruption; they are not a signature authenticating the publisher.
+
+CI also runs each real bundled esptool executable on its matching Apple Silicon or Intel Mac runner, using the version command without accessing USB.
 
 The package builder rejects development filenames, empty images and uncommitted installer files. It cannot establish whether someone renamed an arbitrary binary or supplied a false source SHA: the guarded source build and maintainer's verified provenance remain required.
 

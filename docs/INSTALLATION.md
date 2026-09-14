@@ -63,6 +63,7 @@ A sleeping device may take a few seconds after USB is connected to show the char
 ## If installation fails
 
 - **Package/checksum error:** download and unzip a fresh complete package. Do not mix files from different downloads.
+- **More than one device found:** disconnect other USB serial devices, leaving only the Magic 8 connected, then run the installer again.
 - **Device not found or connection timeout:** make sure only one device is connected; try a known data cable and a different USB port. For a device already running Magic 8, press the third button once after connecting USB.
 - **Write or verification error:** unplug and reconnect, then retry once.
 - **PASS but the device never starts:** retry once. If it still fails, set it aside and record the screen behavior.

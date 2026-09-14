@@ -45,6 +45,16 @@ for file in "$BIN" "$ESPTOOL"; do
 done
 shasum -a 256 -c SHA256SUMS >/dev/null 2>&1 || fail "A package checksum does not match. Download the complete package again."
 
+# This board exposes native USB serial. Require one target, then bind esptool
+# to that exact port instead of allowing it to search other serial devices.
+ports=()
+while IFS= read -r port; do
+  [ -n "$port" ] && ports+=("$port")
+done < <(find /dev -maxdepth 1 -name 'cu.usbmodem*' -print)
+[ "${#ports[@]}" -gt 0 ] || fail "No device found. Connect one device with a data cable and try again."
+[ "${#ports[@]}" -eq 1 ] || fail "Connect only one device. Disconnect other USB serial devices and try again."
+PORT="${ports[0]}"
+
 # macOS may require a one-time Open Anyway approval before this script can start.
 # Once running, remove downloaded-file quarantine from the selected vendor tool.
 if command -v xattr >/dev/null 2>&1; then
@@ -57,7 +67,7 @@ echo "Firmware: $(basename "$BIN")"
 echo "Keep ONE device connected using a USB-C DATA cable."
 echo "Leave it connected until installation finishes."
 echo
-"$ROOT/$ESPTOOL" --chip esp32c6 --baud 460800 write-flash 0x0 "$ROOT/$BIN"
+"$ROOT/$ESPTOOL" --chip esp32c6 --baud 460800 --port "$PORT" write-flash 0x0 "$ROOT/$BIN"
 status=$?
 echo
 if [ "$status" -eq 0 ]; then
