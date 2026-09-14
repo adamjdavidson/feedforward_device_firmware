@@ -2,7 +2,7 @@
 
 **Download the software. Connect the device. Double-click to install.**
 
-## [Download for Mac](https://github.com/adamjdavidson/feedforward_device_firmware/releases/download/v0.2.1-guide2/Magic8-Firmware-0.2.1-mac.zip)
+## [Download for Mac](https://github.com/adamjdavidson/feedforward_device_firmware/releases/download/v0.2.1-guide3/Magic8-Firmware-0.2.1-mac.zip)
 
 > **First time on this Mac? Apple may block the installer.**
 >
@@ -127,4 +127,4 @@ Keep the device plugged in for this check.
 
 ---
 
-**Other information:** [Battery fitting and charging](docs/BATTERY.md) · [Release notes](https://github.com/adamjdavidson/feedforward_device_firmware/releases/tag/v0.2.1-guide2) · [For maintainers](docs/RELEASE.md) · [Bundled software](THIRD_PARTY.md)
+**Other information:** [Battery fitting and charging](docs/BATTERY.md) · [Release notes](https://github.com/adamjdavidson/feedforward_device_firmware/releases/tag/v0.2.1-guide3) · [For maintainers](docs/RELEASE.md) · [Bundled software](THIRD_PARTY.md)

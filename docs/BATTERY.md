@@ -7,6 +7,10 @@
 
 > **Assembly guide:** these photos show the actual device and parts. Use the first unit to confirm the fit before repeating the assembly across the batch.
 
+## Watch the installation
+
+**[Open the battery installation video (4 min 8 sec)](videos/battery-installation.mp4)**
+
 ## Gather the parts
 
 - **The device and its supplied 3.7 V, 1000 mAh battery.**

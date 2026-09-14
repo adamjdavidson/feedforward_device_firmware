@@ -54,11 +54,12 @@ class PackageTests(unittest.TestCase):
         from urllib.parse import unquote, urlsplit
         class Links(HTMLParser):
             def __init__(self):
-                super().__init__(); self.images=[]; self.links=[]
+                super().__init__(); self.images=[]; self.links=[]; self.videos=[]
             def handle_starttag(self, tag, attrs):
                 attrs=dict(attrs)
                 if tag=='img': self.images.append(attrs.get('src',''))
                 if tag=='a': self.links.append(attrs.get('href',''))
+                if tag=='video': self.videos.append(attrs.get('src',''))
         r=self.run_builder()
         self.assertEqual(r.returncode,0,r.stdout+r.stderr)
         with zipfile.ZipFile(next(self.output.glob('*.zip'))) as z:
@@ -67,7 +68,9 @@ class PackageTests(unittest.TestCase):
             for name in ['START HERE.html','FIT BATTERY.html']:
                 page=Links(); page.feed(z.read(root+name).decode())
                 self.assertTrue(page.images, name+' needs its instructional photographs')
-                for link in page.images+page.links:
+                if name=='FIT BATTERY.html':
+                    self.assertEqual(page.videos, ['docs/videos/battery-installation.mp4'])
+                for link in page.images+page.links+page.videos:
                     parts=urlsplit(link)
                     if not parts.scheme and parts.path:
                         self.assertIn(root+unquote(parts.path),z.namelist(), link)

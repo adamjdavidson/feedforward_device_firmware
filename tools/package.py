@@ -34,7 +34,7 @@ def main():
     version = match.group(1)
     files = {}
     # Explicit allowlist: no repository history, private notes, or build tools.
-    names = ['installer/Install Magic 8.command', 'THIRD_PARTY.md']
+    names = ['installer/Install Magic 8.command', 'THIRD_PARTY.md', 'docs/videos/battery-installation.mp4']
     for arch in ('arm64', 'amd64'):
         names += [f'installer/vendor/esptool-macos-{arch}/{name}' for name in ('esptool', 'LICENSE')]
     names += [f'docs/images/{name}.jpg' for name in ('device-buttons','loose-battery','open-case','battery-connected','insulating-sheet','battery-insulated')]
@@ -54,7 +54,10 @@ def main():
         copy = copy.replace('(../README.md)', '(START%20HERE.html)')
         if source.startswith('docs/'):
             copy = copy.replace('(images/', '(docs/images/')
+            copy = copy.replace('(videos/', '(docs/videos/')
         body = markdown.markdown(copy, extensions=['tables','fenced_code','toc'])
+        if source == 'docs/BATTERY.md':
+            body = body.replace('<p><strong><a href="docs/videos/battery-installation.mp4">', '<video controls playsinline preload="metadata" src="docs/videos/battery-installation.mp4" aria-label="Battery installation video"></video>\n<p><strong><a href="docs/videos/battery-installation.mp4">')
         files[output] = (f'<!doctype html><html lang="en"><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>{title}</title><style>{css}</style><main>{body}</main></html>').encode()
     files['dist/'+args.firmware.name] = image
     installer_commit = subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip()
