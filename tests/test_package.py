@@ -18,9 +18,14 @@ class PackageTests(unittest.TestCase):
         self.image = self.root/'magic8-0.2.1-esp32c6-merged.bin'
         self.image.write_bytes(b'firmware fixture')
         self.output = self.root/'output'
+        self.build_root = self.root/'source'
+        shutil.copytree(SOURCE, self.build_root, ignore=shutil.ignore_patterns('.git', 'packages', '__pycache__', '.venv'))
+        subprocess.run(['git','init','-q'],cwd=self.build_root,check=True)
+        subprocess.run(['git','add','.'],cwd=self.build_root,check=True)
+        subprocess.run(['git','-c','user.name=Package Test','-c','user.email=test@example.invalid','commit','-qm','fixture'],cwd=self.build_root,check=True)
 
     def run_builder(self):
-        return subprocess.run([sys.executable,str(SOURCE/'tools/package.py'), '--firmware',str(self.image),'--source-commit','a'*40,'--output',str(self.output)],capture_output=True,text=True)
+        return subprocess.run([sys.executable,str(self.build_root/'tools/package.py'), '--firmware',str(self.image),'--source-commit','a'*40,'--output',str(self.output)],capture_output=True,text=True)
 
     def test_download_contains_one_image_readable_guide_and_executable_installer(self):
         r = self.run_builder()
@@ -50,6 +55,14 @@ class PackageTests(unittest.TestCase):
         r=self.run_builder()
         self.assertNotEqual(r.returncode,0)
         self.assertIn('development',r.stderr.lower())
+        self.assertFalse(list(self.output.glob('*.zip')))
+
+    def test_uncommitted_installer_cannot_be_attributed_to_head(self):
+        with (self.build_root/'installer/Install Magic 8.command').open('a') as f:
+            f.write('\n# changed since commit\n')
+        r=self.run_builder()
+        self.assertNotEqual(r.returncode,0)
+        self.assertIn('uncommitted',r.stderr.lower())
         self.assertFalse(list(self.output.glob('*.zip')))
 
     def test_empty_firmware_cannot_be_packaged(self):

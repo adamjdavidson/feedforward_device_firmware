@@ -77,6 +77,8 @@ A green dot is the firmware's readiness indication. Charging duration, a minimum
 
 ## Fit the battery
 
+**Provisional assembly guide:** use this walkthrough to confirm that the supplied parts and case match these steps before preparing the batch.
+
 Skip this section if the battery is already fitted. Keep USB disconnected while the case is open.
 
 - The loose 3.7 V, 1000 mAh battery supplied with that unit — red and black

@@ -6,7 +6,6 @@ import json
 from pathlib import Path
 import re
 import subprocess
-import sys
 import zipfile
 import markdown
 
@@ -30,6 +29,8 @@ def main():
     image = args.firmware.read_bytes()
     if not image:
         parser.error('The firmware image is empty.')
+    if subprocess.check_output(['git','status','--porcelain','--untracked-files=all'],cwd=ROOT,text=True).strip():
+        parser.error('Refusing uncommitted installer files. Commit the exact package inputs first.')
     version = match.group(1)
     files = {}
     # Explicit allowlist: no repository history, private notes, or build tools.

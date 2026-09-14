@@ -30,7 +30,7 @@ Substitute the real image path and its source SHA. Run this from a clean, commit
 
 `docs/INSTALLATION.md` is the single source for `START HERE.html`. The builder uses an explicit allowlist, bundles only the two esptool executables and licenses, includes exactly one firmware image, and records both firmware and installer source commits. The ZIP retains executable permissions. `SHA256SUMS` covers every included file except itself. The installer checks those sums before writing to USB.
 
-The package builder rejects development filenames and empty images. It cannot establish whether someone renamed an arbitrary binary or supplied a false source SHA: the guarded source build and maintainer's verified provenance remain required.
+The package builder rejects development filenames, empty images and uncommitted installer files. It cannot establish whether someone renamed an arbitrary binary or supplied a false source SHA: the guarded source build and maintainer's verified provenance remain required.
 
 ## Verify and publish
 
